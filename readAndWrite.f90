@@ -1,18 +1,22 @@
 module readAndWrite
     implicit none
     character (len=80) :: fileName
-    integer :: openErr,readErr = 0,x,y,z
+    character (len=3) :: x,y,z
+    integer :: openErr,readErr = 0,i
 
 contains
 
     subroutine readFile()
-        call get_command_argument(1,fileName)
 
-        open(unit=1,file="fileName",iostat = openErr)
+        call get_command_argument(1,fileName)
+        print*,fileName
+        open(unit=1,file="fileName",iostat = openErr,form='formatted',action='read')
         print*,"test"
-        do while (readErr /= 0) 
-            read(1,'(3I2)',iostat = readErr)x,y,z
-            print*,x,y,z,1
+        do
+            read(1,*,iostat = readErr)x,y,z
+            print*,readErr
+            if (readErr < 0) exit
+            print*,x,y,z
         end do
 
     end subroutine readFile
