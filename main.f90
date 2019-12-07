@@ -7,7 +7,7 @@ program main
     integer :: particleCount,i
 
     call readFile(allParticles,particleCount)
-
+    print*,allParticles
     call testTrajectory(allParticles,particleCount)
 
 end program main
