@@ -1,13 +1,13 @@
 program main
     use readAndWrite
     use particleType
+    use particleTrajectory
     implicit none
     type(particle), allocatable :: allParticles(:)
     integer :: particleCount,i
 
     call readFile(allParticles,particleCount)
 
-    do i = 1, particleCount
-        print*, allParticles(i)
-    end do
+    call testTrajectory(allParticles,particleCount)
+
 end program main
