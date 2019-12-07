@@ -15,6 +15,14 @@ contains
         !opening input file
         open(unit=1,file=fileName,iostat = openErr,form='formatted',action='read',status="old")
 
+        if (openErr == 2) then
+            print*,"--File error--"
+            print*,"--File '", trim(fileName),"' does not exist--"
+        else if (openErr /= 0) then
+            print*,"--File error"
+            print*,"--Error opening '", trim(fileName),"' file--"
+        end if
+        
         !first value of input particle file should be particle count
         !with this value will allocate the list lenght of velocity cordinates, mass and charge
         read(1,*,iostat=readErr)particleCount
@@ -29,6 +37,8 @@ contains
             particleList(i)%vz, & 
             particleList(i)%mass, & 
             particleList(i)%charge
+
+            particleList(i)%count = i
 
             if (readErr /= 0) exit
             i = i + 1 

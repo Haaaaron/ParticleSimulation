@@ -10,6 +10,4 @@ program main
     do i = 1, particleCount
         print*, allParticles(i)
     end do
-
-    print*,"bash test"
 end program main
