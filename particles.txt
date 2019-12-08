@@ -1,3 +1,6 @@
-count: 1
+count: 3
 vx  vy  vz  m   q   particleCount
-0   0   3   1   1   1
+1000   1000   1000   1   1   1
+357 300000 0 2 -1 2
+0 200000 0 1 -1 3
+
