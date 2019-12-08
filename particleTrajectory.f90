@@ -16,11 +16,15 @@ contains
         type(particle) :: particleList(particleCount)
         type(passedParticle) :: passedParticleList(particleCount)
         integer :: particleCount,i
+        real :: T1,T2 
+        call cpu_time(T1)        
 
         do i = 1, particleCount
             passedParticleList(i) = trajectoryCalculation(particleList(i))
         end do
 
+        call cpu_time(T2)
+        print*,T2-T1
         !call writeToFile(passedParticleList)
 
     end subroutine testTrajectory
@@ -29,8 +33,10 @@ contains
         implicit none
         type(particle) :: inputParticle
         type(position) :: pos,posDt
-        real :: B , E, dt = 0.000000001, az, ay, vy, vyDt, vz, vzDt
+        real :: B , E, dt = 1E-9, az, ay, vy, vyDt, vz, vzDt
         real (kind=16) :: m,q
+        character (len=80) :: filename
+         
 
         call getConstant(B,E)
         m = inputParticle%m
@@ -43,6 +49,8 @@ contains
         vz = inputParticle%vz 
         vy = inputParticle%vy
 
+        write(filename,"(A11,I1,A4)")"trajectory_",inputParticle%count,".xyz"
+        open(unit=1,file=filename,form='formatted',action='write',status="new")
         do 
             posDt%x = pos%x + inputParticle%vx*dt
             if (abs(posDt%x) > Lx/2) then
@@ -71,9 +79,11 @@ contains
             pos = posDt
             vz = vzDt
             vy = vyDt
-       
+
+            write(1,*)pos
         end do
 
+        close(1)
        
 
 
