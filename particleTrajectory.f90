@@ -3,10 +3,10 @@ module particleTrajectory
     use readAndWrite
     implicit none
     real (kind=16),parameter :: &
-    Ly=7.6*10**(-2), &
-    Lx=1.9*10**(-2), &
-    Lz=Lx, &
-    eu = 9.6485*10**7
+            Ly=7.6E-2, &
+            Lx=1.9E-2, &
+            Lz=1.9E-2, &
+            eu = 9.6485E7
     
 
 contains
@@ -29,10 +29,10 @@ contains
         implicit none
         type(particle) :: inputParticle
         type(position) :: pos,posDt
-        real :: B , E, dt = 0.00000000000000001, az, ay, vy, vyDt, vz, vzDt
+        real :: B , E, dt = 0.000000001, az, ay, vy, vyDt, vz, vzDt
         real (kind=16) :: m,q
-        call getConstant(B,E)
 
+        call getConstant(B,E)
         m = inputParticle%m
         q = inputParticle%q
 
@@ -47,7 +47,7 @@ contains
             posDt%x = pos%x + inputParticle%vx*dt
             if (abs(posDt%x) > Lx/2) then
                 print*,"particle crashed"
-                print*,pos,"1"
+                print*,pos," :x"
                 exit
             end if
 
@@ -56,21 +56,19 @@ contains
             posDt%z = pos%z + vzDt*dt
             if (abs(posDt%z) > Lz/2) then
                 print*,"particle crashed"
-                print*,pos,"2"
+                print*,pos," :z"
                 exit
             end if
 
             ay = (q*vz*B)*eu/m
-            vyDt = vy + ay*d
+            vyDt = vy + ay*dt
             posDt%y = pos%y + vyDt*dt
             if (abs(posDt%y) > Ly) then
                 print*,"passed"
                 print*,pos
                 exit
             end if
-
             pos = posDt
-            print*,pos
             vz = vzDt
             vy = vyDt
        
