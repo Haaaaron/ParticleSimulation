@@ -2,6 +2,7 @@ module particleTrajectory
     use particleType
     use readAndWrite
     implicit none
+    logical :: wrtieFiles = .False.
     real (kind=16),parameter :: &
             Ly=7.6E-2, &
             Lx=1.9E-2, &
@@ -33,7 +34,7 @@ contains
         implicit none
         type(particle) :: inputParticle
         type(position) :: pos,posDt
-        real :: B , E, dt = 1E-9, az, ay, vy, vyDt, vz, vzDt
+        real :: B , E, dt = 1E-10, az, ay, vy, vyDt, vz, vzDt
         real (kind=16) :: m,q
         character (len=80) :: filename
          
@@ -45,7 +46,7 @@ contains
         pos%x = 0
         pos%y = 0
         pos%z = 0
-
+        print*,Lx/2
         vz = inputParticle%vz 
         vy = inputParticle%vy
 
@@ -54,8 +55,9 @@ contains
         do 
             posDt%x = pos%x + inputParticle%vx*dt
             if (abs(posDt%x) > Lx/2) then
+                print*,abs(posDt%x) - Lx/2
                 print*,"particle crashed"
-                print*,pos," :x"
+                print*,posDt," :x"
                 exit
             end if
 
@@ -82,8 +84,10 @@ contains
 
             write(1,*)pos
         end do
-
-        close(1)
+        if (writeFiles == .true.) then
+            close(1,sta=keep)
+        close(1,sta=delete)
+        
        
 
 
