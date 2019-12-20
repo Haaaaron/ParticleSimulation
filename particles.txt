@@ -1,5 +1,0 @@
-count: 2
-vx  vy  vz  m   q   particleCount
-0   10000   0   1   2   1
-1000   0   1000   1   1   2
-
