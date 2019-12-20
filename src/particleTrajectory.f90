@@ -2,7 +2,7 @@ module particleTrajectory
     use particleType
     use readAndWrite
     implicit none
-    logical :: wrtieFiles = .False.
+    public :: folderName,B,E,writeFiles
     real (kind=16),parameter :: &
             Ly=7.6E-2, &
             Lx=1.9E-2, &
@@ -12,46 +12,27 @@ module particleTrajectory
 
 contains
 
-    subroutine testTrajectory(particleList,particleCount)
-        implicit none
-        type(particle) :: particleList(particleCount)
-        type(passedParticle) :: passedParticleList(particleCount)
-        integer :: particleCount,i
-        real :: T1,T2 
-        call cpu_time(T1)        
-
-        do i = 1, particleCount
-            passedParticleList(i) = trajectoryCalculation(particleList(i))
-        end do
-
-        call cpu_time(T2)
-        print*,T2-T1
-        !call writeToFile(passedParticleList)
-
-    end subroutine testTrajectory
-
     type(passedParticle) function trajectoryCalculation(inputParticle)
         implicit none
         type(particle) :: inputParticle
         type(position) :: pos,posDt
-        real :: B , E, dt = 1E-10, az, ay, vy, vyDt, vz, vzDt
+        real :: dt = 1E-10, az, ay, vy, vyDt, vz, vzDt
         real (kind=16) :: m,q
-        character (len=80) :: filename
+        character (len=80) :: fileName
          
-
-        call getConstant(B,E)
         m = inputParticle%m
         q = inputParticle%q
 
         pos%x = 0
         pos%y = 0
         pos%z = 0
-        print*,Lx/2
+ 
         vz = inputParticle%vz 
         vy = inputParticle%vy
 
-        write(filename,"(A11,I1,A4)")"trajectory_",inputParticle%count,".xyz"
-        open(unit=1,file=filename,form='formatted',action='write',status="new")
+        write(filename,"(A,'/trajectory_',I0,'.xyz')")trim(folderName),inputParticle%count
+        open(unit=1,file=fileName,form='formatted',action='write',status="new")
+
         do 
             posDt%x = pos%x + inputParticle%vx*dt
             if (abs(posDt%x) > Lx/2) then
@@ -84,25 +65,11 @@ contains
 
             write(1,*)pos
         end do
-        if (writeFiles == .true.) then
-            close(1,sta=keep)
-        close(1,sta=delete)
-        
-       
-
+        if (writeFiles .eqv. .true.) then
+            close(1,status='keep')
+        end if
+        close(1,status='delete')
 
     end function trajectoryCalculation
-
-    subroutine getConstant(B,E)
-        implicit none
-        character (len=80) :: inputB,inputE
-        real :: B,E
-
-        call get_command_argument(2,inputB)
-        call get_command_argument(3,inputE)
-
-        read(inputB,*)B
-        read(inputE,*)E
-    end subroutine
 
 end module particleTrajectory

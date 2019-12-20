@@ -1,6 +1,9 @@
 module readAndWrite
     use particleType
     implicit none
+    character (len=80) :: folderName
+    logical :: writeFiles
+    real :: B,E
 
 contains
 
@@ -46,5 +49,57 @@ contains
         end do
 
     end subroutine readFile
+
+    subroutine testInitialConditions()
+        implicit none
+        character (len=80) :: inputB,inputE,keepFiles,executeString
+        integer :: runCount = 1,inqErr, cmd_arg_count 
+        logical :: folderExist
+
+        cmd_arg_count = command_argument_count()
+
+        if (cmd_arg_count < 3) then 
+            print*,"Error in given command line argument count"
+            print*,"Should be more than 3"
+            stop
+        end if
+
+        
+
+        !if user wanted to create trajectory files this will create a trajectory folder for run n
+
+        if (cmd_arg_count > 3) then
+            call get_command_argument(4,keepFiles)
+            if (keepFiles == "keep") writeFiles = .True.
+
+            !tests what run we are as in what folder to create "trajectory_n" for run n
+            createFolder: do 
+
+                write(folderName,"('./runs/run_',i0)")runCount
+                inquire(file=folderName,exist=folderExist,iostat=inqErr)
+
+
+                if (folderExist .eqv. .false.) then
+
+                    executeString = "mkdir " // folderName
+                    print*,executeString
+                    call execute_command_line(executeString)
+    
+                    exit createFolder
+
+                end if
+                
+                runCount = runCount + 1
+
+            end do createFolder
+        end if
+
+        call get_command_argument(2,inputB)
+        call get_command_argument(3,inputE)
+
+        read(inputB,*)B
+        read(inputE,*)E
+
+    end subroutine testInitialConditions
 
 end module readAndWrite
