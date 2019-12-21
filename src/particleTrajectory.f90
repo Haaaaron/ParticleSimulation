@@ -8,15 +8,13 @@ module particleTrajectory
             Lx=1.9E-2, &
             Lz=1.9E-2, &
             eu = 9.6485E7
-    
-
 contains
 
     type(passedParticle) function trajectoryCalculation(inputParticle)
         implicit none
         type(particle) :: inputParticle
         type(position) :: pos,posDt
-        real :: dt = 1E-10, az, ay, vy, vyDt, vz, vzDt
+        real :: dt = 1E-9, az, ay, vy, vyDt, vz, vzDt
         real (kind=16) :: m,q
         character (len=80) :: fileName
          
