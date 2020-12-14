@@ -6,7 +6,7 @@ Fortran project to simulate the trajectory of a charged particle in a homogenous
 
 compilation:
   
-  ./run/run.sh -c
+  ´./run/run.sh -c´
   
 operation:
 
@@ -21,14 +21,16 @@ Provide input data file with initial values of n charged particles. Default exam
 File format of input.dat:
 
 count: n
-vx      vy      vz      mass    charge  particleCount
-0       10000   0       1       2       1
-.       .       .       .       .       .
-.       .       .       .       .       .
-1000    0       1000    1       1       n
+|vx      |vy      |vz      |mass    |charge  |particleCount|
+------------------------------------------------------------
+|0       |10000   |0       |1       |2       |1            |
+|.       |.       |.       |.       |.       |.            |
+|.       |.       |.       |.       |.       |.            |
+|1000    |0       |1000    |1       |1       |n            |
 
 Run:
-  ./run/run.sh
+
+  ´./run/run.sh´
   
 ## Drawing of trajectories with python
   
@@ -39,4 +41,4 @@ Trajectories are saved for particles that did not crash in to folders ./run/runs
 
 To draw the jth particle of the ith run:
   
-  python3 plot.py i j
+  ´python3 plot.py i j´
