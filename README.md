@@ -37,7 +37,11 @@ Run:
   `./run.sh -r`
 
 Program creates file output.dat that contains all passed particles with:
+
 |Exit position (x,y,z)|Exit velocity (x,y,z)|Charge|Mass|particleCount|
+|---------------------|---------------------|------|----|-------------|
+
+Example file ./run/runs/run_1/output.dat
 
 ## Drawing of trajectories with python
 
