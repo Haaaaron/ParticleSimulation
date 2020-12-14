@@ -10,11 +10,12 @@ Fortran project to simulate the trajectory of a charged particle in a homogenous
   
 #### operation:
 
-__Set magnetic and electric field strengh in run.sh file.__
+__Set magnetic and electric field strengh in run.sh file as well as time difference between steps.__
 
 default:
   1. E=12000
   2. B=0.1
+  3. dt=0.00000000001
   
 __Provide input data file with initial values of n charged particles.__ 
 
@@ -33,15 +34,24 @@ count: n
 
 Run:
 
-  `./run/run.sh`
+  `./run.sh -r`
   
 ## Drawing of trajectories with python
+
+To save trajectory files for particles, run:
+
+  `./run.sh -xyz`
   
-Trajectories are saved for particles that did not crash in to folders ./run/runs/run_(i)/trajectory_(j).xyz
+Trajectories are saved in to folders ./run/runs/run_{i}/trajectory_{j}.xyz
 
 1. i=the ith operation of run.sh
-2. j=the jth trajectory of passed particle
+2. j=the jth trajectory of particle n
 
 To draw the jth particle of the ith run:
   
-  `python3 plot.py i j`
+  `./run.sh -p {i} {j}`
+  
+To remove contents of folder run:
+
+  `./run.sh -cr`
+
