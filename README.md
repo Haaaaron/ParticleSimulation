@@ -2,7 +2,7 @@
 
 Fortran project to simulate the trajectory of a charged particle in a homogenous electromagnetic field
 
-##Build and operation:
+## Build and operation:
 
 compilation:
   ./run/run.sh -c
@@ -27,7 +27,7 @@ vx      vy      vz      mass    charge  particleCount
 Run:
   ./run/run.sh
   
-##Drawing of trajectories with python
+## Drawing of trajectories with python
   
 Trajectories are saved for particles that did not crash in to folders ./run/runs/run_(i)/trajectory_(j).xyz
 where 
