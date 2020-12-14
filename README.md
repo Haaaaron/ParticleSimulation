@@ -35,6 +35,12 @@ count: n
 Run:
 
   `./run.sh -r`
+  
+Compiled executable can be run directly:
+
+  `./Trajectory.out {inputFile} {B} {E} {dt} xyz`
+
+xyz is optional. Have a look at section **"Drawing of trajectories with python"**
 
 Program creates file output.dat that contains all passed particles with:
 
