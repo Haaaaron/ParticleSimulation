@@ -4,19 +4,21 @@ Fortran project to simulate the trajectory of a charged particle in a homogenous
 
 ## Build and operation:
 
-compilation:
+#### compilation:
   
   `./run/run.sh -c`
   
-operation:
+#### operation:
 
-Set magnetic and electric field strengh in run.sh file.
+__Set magnetic and electric field strengh in run.sh file.__
 
 default:
   1. E=12000
   2. B=0.1
   
-Provide input data file with initial values of n charged particles. Default example file is ./run/input.dat
+__Provide input data file with initial values of n charged particles.__ 
+
+Default example file is ./run/input.dat
 
 File format of input.dat:
 
